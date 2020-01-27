@@ -4,13 +4,16 @@
     <nav-bar class="nav-bar">
       <div slot="center">购物街</div>
     </nav-bar>
-    <homeSwiper :banners='banners' />
+    <home-swiper :banners='banners' />
+    <recommend-view :recommends='recommends' />
   </div>
 </template>
 
 <script>
 import NavBar from 'common/navbar/NavBar'
 import homeSwiper from './chilrenCom/homeSwiper'
+import recommendView from './chilrenCom/recommendsView'
+
 import {getHomeMultidata} from 'network/home'
 
 export default {
@@ -23,7 +26,8 @@ export default {
   },
   components: {
     NavBar,
-    homeSwiper
+    homeSwiper,
+    recommendView
   },
   created () {
     // 1. 请求多个数据
