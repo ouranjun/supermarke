@@ -31,7 +31,7 @@
       },
       showIndicator: {
         type: Boolean,
-        default: false
+        default: true
       }
     },
     data: function () {
@@ -40,17 +40,27 @@
         totalWidth: 0, // swiper的宽度
         swiperStyle: {}, // swiper样式
         currentIndex: 1, // 当前的index
-        scrolling: true, // 是否正在滚动
+        scrolling: false, // 是否正在滚动
       }
     },
-    mounted: function () {
+    /* created () {
+      this.$nextTick(() => {
+        // 1.操作DOM, 在前后添加Slide
+        setTimeout(() => {
+          this.handleDom();
+          // 2.开启定时器
+          this.startTimer();
+        }, 1000)
+      })
+    }, */
+   mounted: function () {
       // 1.操作DOM, 在前后添加Slide
       setTimeout(() => {
         this.handleDom();
 
         // 2.开启定时器
         this.startTimer();
-      }, 100)
+      }, 1000)
     },
     methods: {
 		  /**
