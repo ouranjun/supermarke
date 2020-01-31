@@ -6,6 +6,7 @@ import MintUI from 'mint-ui'
 Vue.config.productionTip = false
 
 Vue.use(MintUI)
+Vue.prototype.$bus = new Vue()
 
 new Vue({
   router,

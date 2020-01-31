@@ -1,16 +1,9 @@
 <template>
 <div id="hy-swiper">
-  <!-- <mt-swipe class="my-swipe" :prevent='true' :auto="4000" :show-indicators="false">
-  <mt-swipe-item class="my-swipe-item" v-for="item in banners" :key="item.link">
-    <a :href="item.link">
-      <img :src="item.image" alt="">
-    </a>
-  </mt-swipe-item>
-  </mt-swipe> -->
   <swiper class="my-swipe">
-  <swiper-item class="my-swipe-item" v-for="item in banners" :key="item.link">
+  <swiper-item class="my-swipe-item" v-for="item in banners" :key="item.link" >
     <a :href="item.link">
-      <img :src="item.image" alt="">
+      <img :src="item.image" alt="" @load="swiperImageLoad">
     </a>
   </swiper-item>
   </swiper> 
@@ -35,30 +28,28 @@ export default {
       default () {
         return []
       }
+    },
+  },
+  data () {
+    return {
+      isLoad: false
     }
   },
   components: {
     Swiper, 
     SwiperItem
+  },
+  methods: {
+    swiperImageLoad () {
+      if (!this.isLoad) {
+        this.$emit('swiperImageLoad')
+        this.isLoad = true
+      }
+    }
   }
 }
 </script>
 
 <style>
-/* @import '~mint-ui/lib/style.css'; */
-/* 
- #hy-swiper {
-    overflow: hidden;
-    position: relative;
-}
-.my-swipe{
-	height: 200px;
-}
-.my-swipe-item{
-  width: 100%;
-  flex-shrink: 0;
-}
-.my-swipe img{
-	width: 100%;
-} */
+
 </style>
