@@ -36,7 +36,6 @@ export default {
       this.$router.replace(this.path)
     }
   }
-
 }
 </script>
 

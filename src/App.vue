@@ -1,7 +1,9 @@
 <template>
   <div id="app">
-    <router-view />
-    <MianTabBar/>
+    <keep-alive exclude="Detail">
+      <router-view />
+    </keep-alive>
+    <MianTabBar v-show="showTab"/>
   </div>
 </template>
 
@@ -12,6 +14,12 @@ export default {
   name: 'App',
   components: {
     MianTabBar
+  },
+  computed: {
+    showTab () {
+     if (this.$route.meta.showTab)
+      return true
+    }
   }
 }
 </script>

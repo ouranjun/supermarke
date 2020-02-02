@@ -61,7 +61,8 @@ export default {
       currentType: 'pop',
       isShow: false,
       tabOffsetTop: 0,
-      isTabFixed: false
+      isTabFixed: false,
+      saveY: 0
     }
   },
   components: {
@@ -120,6 +121,8 @@ export default {
       this.$refs.scroll.scrollTo(0, 0)
     },
     scroll (position) {
+      //console.log(position);
+      
       // 判断backTop是否显示
       this.isShow = (-position.y) > 1000
       // 决定tabControl是否吸顶(position: fixed)
@@ -152,6 +155,13 @@ export default {
         this.$refs.scroll.finishPullUp();
       })
     }
+  },
+  activated () {
+    this.$refs.scroll.scroll.scrollTo(0,this.saveY,1)
+    this.$refs.scroll.refresh()  
+  },
+  deactivated () {
+    this.saveY = this.$refs.scroll.scroll.y
   }
 }
 </script>
