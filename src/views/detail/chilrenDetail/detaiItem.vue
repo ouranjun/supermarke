@@ -32,7 +32,8 @@ export default {
   },
   methods: {
     titleClick (index) {
-      this.currentIndex = index
+      this.currentIndex = index;
+      this.$emit('scrollY', index)
     },
     backClick () {
       this.$router.back()

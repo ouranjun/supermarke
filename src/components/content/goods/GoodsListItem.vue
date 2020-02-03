@@ -1,6 +1,6 @@
 <template>
   <div class="goods-item">
-    <img :src="goodsItem.show.img"
+    <img :src="showImage"
      :alt="goodsItem.title"
       :title="goodsItem.title"
        @load="imgLoad"
@@ -30,6 +30,11 @@ export default {
     },
     imgClick () {
       this.$router.push('/detail/'+this.goodsItem.iid)
+    }
+  },
+  computed: {
+    showImage () {
+      return this.goodsItem.image || this.goodsItem.show.img
     }
   }
 }
