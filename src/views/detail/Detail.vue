@@ -12,7 +12,7 @@
     <goods-list ref="recommend" :goods='recommends' /> 
   </scroll> 
     <back-top @click.native="backTop" v-show="backTopisShow"/>
-    <detailBottomBar />
+    <detailBottomBar @addCart='addCart' />
   </div>
 </template>
 
@@ -122,6 +122,24 @@ export default {
     // 回到顶部
     backTop () {
       this.$refs.scroll.scrollTo(0,0,200) 
+    },
+    // 加入购物车
+    addCart () {
+      // 1.获取购物车需要展示的信息
+      const product = {}
+      product.image = this.topImage[0];
+      product.title = this.goodsInfo.title;
+      product.desc = this.goodsInfo.desc;
+      product.price = this.goodsInfo.realPrice;
+      product.iid = this.iid;
+
+      // 2.获取商品加入到购物车
+      // this.$store.commit('addCart', product)
+      this.$store.dispatch('addCart', product).then(res => {
+        this.$toast.show(res, 2000)
+        
+      })
+
     }
   },
   mounted () {
