@@ -1,6 +1,6 @@
 <template>
-  <div class="goods-item">
-    <img :src="showImage"
+  <div class="goods-item" >
+    <img v-lazy="showImage"
      :alt="goodsItem.title"
       :title="goodsItem.title"
        @load="imgLoad"
