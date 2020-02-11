@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <keep-alive exclude="Detail">
+    <keep-alive include="home">
       <router-view />
     </keep-alive>
     <MianTabBar v-show="showTab"/>

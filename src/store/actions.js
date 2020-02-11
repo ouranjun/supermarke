@@ -12,8 +12,9 @@ export default {
       // 2.判断oldProduct
       if(oldProduct){
         // oldProduct.count +=1
+        oldProduct.count += payload.count
         context.commit(ADD_COUNTER, oldProduct)
-        resolve('当前的商品数量+1')
+        resolve('当前的商品数量+'+ payload.count)
       } else {
         // payload.count = 1
         // context.state.cartList.push(payload)

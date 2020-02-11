@@ -16,7 +16,7 @@
     </div>
     <div class="bar-item bar-right">
       <div class="cart" @click="addCart">加入购物车</div>
-      <div class="buy">立即购买</div>
+      <div class="buy" @click="buyGood">立即购买</div>
     </div>
   </div>
 </template>
@@ -31,6 +31,9 @@ export default {
   methods: {
     addCart () {
       this.$emit('addCart')
+    },
+    buyGood () {
+      this.$emit('buyGood')
     }
   }
 }

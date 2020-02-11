@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     activeClick () {
-      this.$router.replace(this.path)
+      this.$router.push(this.path)
     }
   }
 }

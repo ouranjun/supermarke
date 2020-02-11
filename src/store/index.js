@@ -7,7 +7,8 @@ import actions from './actions'
 Vue.use(Vuex)
 
 const state = {
-  cartList: []
+  cartList: [],
+  addressList: []
 }
 
 const store = new Vuex.Store({

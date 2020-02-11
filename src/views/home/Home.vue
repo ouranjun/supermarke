@@ -20,7 +20,7 @@
     :titles="['流行', '新款', '精选']" 
     @tabClick='tabClick'
     />
-    <good-list :goods='showGoods' />
+    <good-list :goods='showGoods' v-if="showGoods" />
     <div class="footer">ㅡㅡㅡ我是有底线的ㅡㅡㅡ</div>
     </scroll>
     <back-top @click.native="backTop" v-show="isShow" />
@@ -36,6 +36,8 @@ import FeatureView from './chilrenCom/FeatureView'
 import TabControl from 'content/tabcontrol/TabControl'
 import GoodList from 'content/goods/GoodsList'
 import BackTop from 'common/backtop/backTop'
+import { Toast } from 'vant';
+import 'vant/lib/toast/style'
 
 import { getHomeMultidata, getHomeGoods } from 'network/home'
 import { debounce } from '@/common/utils.js'
@@ -82,6 +84,7 @@ export default {
     this.getHomeGoods('pop')
     this.getHomeGoods('new')
     this.getHomeGoods('sell')
+    this.getToast()
   },
   mounted () {
 
@@ -134,6 +137,13 @@ export default {
     },
     swiperImageLoad () {
       this.tabOffsetTop = this.$refs.tabControl2.$el.offsetTop
+    },
+    getToast () {
+      if (this.showGoods.length == 0) {}
+       Toast.loading({
+        message: '加载中...',
+        forbidClick: true
+      });
     },
     /**
      * 网络请求事件

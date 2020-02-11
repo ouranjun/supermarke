@@ -10,9 +10,22 @@
     <detailCommentInfo ref="comment" :commentInfo='commentInfo'/>
     <p class='recommends-text'>-为你推荐-</p>
     <goods-list ref="recommend" :goods='recommends' /> 
-  </scroll> 
+  </scroll>
     <back-top @click.native="backTop" v-show="backTopisShow"/>
-    <detailBottomBar @addCart='addCart' />
+    <detailBottomBar @addCart='addCart' @buyGood='buyGood' />
+    <sku
+      v-model="show"
+      :sku="sku"
+      :goods="goods"
+      :goods-id="goodsId"
+      :message-config="messageConfig"
+      :close-on-click-overlay='overlay'
+      :reset-selected-sku-on-hide = "onHide"
+      @buy-clicked="onBuyClicked"
+      @add-cart="onAddCartClicked"
+
+    >
+    </sku>
   </div>
 </template>
 
@@ -26,12 +39,20 @@ import detailParamInfo from './chilrenDetail/detailParamInfo'
 import detailCommentInfo from './chilrenDetail/detailCommentInfo'
 import detailBottomBar from './chilrenDetail/detailBottomBar'
 import GoodsList from 'content/goods/GoodsList'
+import detailSku from './chilrenDetail/detailSku'
+
 
 import Scroll from 'common/scroll/Scroll'
 import backTop from 'common/backtop/backTop'
+import { Sku, messageConfig } from 'vant';
+import { Toast } from 'vant';
+
 
 import { getDetailId, GoodsInfo, ShopInfo, ParamInfo, getRecommend } from 'network/detail'
+import { sku } from './config'
 import { debounce } from '@/common/utils.js'
+import 'vant/lib/sku/style'
+import 'vant/lib/toast/style'
 
 
 export default {
@@ -48,7 +69,19 @@ export default {
       recommends:[],
       themeTopY: [],
       getThemeTopY: null,
-      backTopisShow: false
+      backTopisShow: false,
+      show: false,
+      sku,
+      messageConfig,
+      overlay: true,
+      goodsId: '001',
+      goods: {
+              // 商品标题
+              title: '测试商品',
+              // 默认商品 sku 缩略图
+              picture: 'https://img.yzcdn.cn/1.jpg'
+            },
+      onHide: true
     }
   },
   components: {
@@ -60,6 +93,7 @@ export default {
     detailParamInfo,
     detailCommentInfo,
     detailBottomBar,
+    Sku,
     Scroll,
     backTop,
     GoodsList
@@ -78,6 +112,8 @@ export default {
       this.detailInfo = data.detailInfo 
       // 5.获取参数信息
       this.paramInfo = new ParamInfo (data.itemParams.info, data.itemParams.rule)
+      console.log(this.paramInfo);
+      
       // 6. 获取评论信息
       if (data.rate.list) {
         this.commentInfo = data.rate.list[0]
@@ -125,21 +161,57 @@ export default {
     },
     // 加入购物车
     addCart () {
-      // 1.获取购物车需要展示的信息
+      this.show = true
+      /* // 1.获取购物车需要展示的信息
+       */
+      
+      // 选择商品类型
+      this.goods.picture = this.topImage[0];
+      for (let x = 0; x<this.sku.tree[0].v.length;x++){
+        this.sku.tree[0].v[x].imgUrl = this.topImage[x];
+        this.sku.tree[0].v[x].previewImgUrl = this.topImage[x];
+      }
+
+      for (let i = 0; i<this.sku.list.length; i++) {
+        this.sku.list[i].price = this.goodsInfo.realPrice * 100;
+      }
+      this.sku.price = this.goodsInfo.realPrice
+  
+      for(let y in this.paramInfo.infos ){
+        if (this.paramInfo.infos[y].key == '颜色'){
+          const colores = this.paramInfo.infos[y].value.split(',')
+          const coloresLen = colores.length
+          for (let z = 0; z< coloresLen; z++){
+            
+            if(z<2){
+              this.sku.tree[0].v[z].name = colores[z]
+            }
+          }
+        }
+      } 
+    },
+    // 立即购买回调
+    buyGood () {
+      this.show = true
+    },
+    onBuyClicked () {
+
+    },
+    onAddCartClicked (skuData) {
       const product = {}
       product.image = this.topImage[0];
       product.title = this.goodsInfo.title;
       product.desc = this.goodsInfo.desc;
       product.price = this.goodsInfo.realPrice;
       product.iid = this.iid;
-
+      product.count = skuData.selectedNum
       // 2.获取商品加入到购物车
       // this.$store.commit('addCart', product)
       this.$store.dispatch('addCart', product).then(res => {
-        this.$toast.show(res, 2000)
-        
+        Toast.success(res);
       })
 
+      
     }
   },
   mounted () {
@@ -175,5 +247,4 @@ export default {
     padding: 10px;
 
   }
-
 </style>

@@ -1,4 +1,5 @@
 <template>
+<SwipeCell >
   <div id="shop-item">
     <div class='item-selector' >
       <check-button :isChecked='product.checked' @click.native="checkClick" />
@@ -11,34 +12,64 @@
       <div class="item-desc">商品描述：{{product.desc}}</div>
       <div class="info-bottom">
         <span class="item-price left">￥{{product.price}}</span>
-        <span class="item-count right">×{{product.count}}</span>
+        <stepper class="right" v-model="value" />
       </div>
     </div>
   </div>
+  <Button
+    slot="right"
+    square
+    text="删除"
+    type="danger"
+    class="delete-button"
+    @click="close(product.iid,index)"
+  />
+</SwipeCell>
 </template>
 
 <script>
 import CheckButton from 'content/checkButton/CheckButton'
+import { SwipeCell,Button, Stepper } from 'vant';
+import 'vant/lib/swipe-cell/style'
+import 'vant/lib/button/style'
+import 'vant/lib/stepper/style'
 
 export default {
   name: 'shopCartListItem',
+  data () {
+    return {
+      value: 1
+    }
+  },
   props: {
     product: {
       type: Object,
       dafault () {
         return {}
       }
+    },
+    index: {
+      type: Number
     }
   },
   components: {
-    CheckButton
+    CheckButton,
+    SwipeCell,
+    Button,
+    Stepper
+  },
+  created () {
+    this.value = this.product.count
   },
   methods: {
     checkClick () {
-      console.log('111');
-      
       this.product.checked = !this.product.checked
+    },
+    close (iid,index) {
+      this.$emit('remove',index)
+      this.$store.commit('removeFormCar',iid)
     }
+
   }
 }
 </script>
@@ -99,6 +130,9 @@ export default {
 
   .info-bottom .item-price {
     color: orangered;
+  }
+  .delete-button {
+    height: 100%;
   }
 
 </style>

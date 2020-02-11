@@ -2,13 +2,19 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import toast from 'common/toast/index'
 import fastclick from 'fastclick'
 import VueLazyload from 'vue-lazyload'
 
-Vue.config.productionTip = false
+import 'vant/lib/index.css';
 
-Vue.use(toast)
+// 解决移动端点击延迟200ms的问题
+if ('addEventListener' in document) {
+  document.addEventListener('DOMContentLoaded', function () {
+    fastclick.attach(document.body);
+  }, false);
+}
+
+
 Vue.use(VueLazyload, {
   preLoad: 1.3,
   error: './assets/img/common/error.jpg',
@@ -16,7 +22,7 @@ Vue.use(VueLazyload, {
   attempt: 1
 })
 
-fastclick.attach(document.body)
+
 
 Vue.prototype.$bus = new Vue()
 

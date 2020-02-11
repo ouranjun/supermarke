@@ -7,8 +7,18 @@ const Category = () => import('views/category/category.vue')
 const Shopcartome = () => import('views/shopcart/shopcart.vue')
 const Profile = () => import('views/profile/profile.vue')
 const Detail = () => import('views/detail/Detail.vue')
+const AddressList = () => import('views/other/chilren/AddressList')
+const AddressEdit = () => import('views/other/chilren/AddressEdit')
+const EditAddress = () => import('views/other/chilren/EditAddress')
+
+// 解决多次点击重复路由报错
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+    return originalPush.call(this, location).catch(err => err)
+}
 
 Vue.use(VueRouter)
+
 
 const routes = [
   {
@@ -39,6 +49,21 @@ const routes = [
   {
     path: '/detail/:iid',
     component: Detail,
+  },
+  {
+    path: '/addresslist',
+    component: AddressList,
+    children: [
+      {
+      path: 'editaddress',
+      name: 'editaddress',
+      component: EditAddress
+      }
+    ]
+  },
+  {
+    path: '/addressedit',
+    component: AddressEdit
   }
 ]
 

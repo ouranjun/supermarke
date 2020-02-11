@@ -1,7 +1,7 @@
 <template>
   <div class="cart-list">
-    <scroll ref="scroll" class="content">
-    <shopCartListItem v-for="(item,index) in cartList" :key="index" :product='item' />
+    <scroll class="content" ref="scroll">
+    <shopCartListItem class="shopCart" @remove='remove' v-for="(item,index) in cartList" :key="index" :index='index' :product='item' />
     </scroll>
   </div>
 </template>
@@ -10,6 +10,7 @@
 import shopCartListItem from './shopCartListItem'
 
 import scroll from 'common/scroll/Scroll'
+
 
 export default {
   name: 'shopCartList',
@@ -20,23 +21,28 @@ export default {
   },
   components: {
     shopCartListItem,
-    scroll
+    scroll,
   },
   activated () {
     this.$refs.scroll.refresh();
     console.log('---');
     
+  },
+  methods: {
+    remove (index) {
+      this.cartList.splice(index,1)
+    }
   }
 }
 </script>
 
 <style scoped>
-  .cart-list {
-    height: calc(100% -44px -49px -40px);
-  }
+
   .content {
     overflow: hidden;
-    height: 100%;
-   
+    height: calc(100vh - 44px - 49px - 40px);
   } 
+  /* .shopCart {
+    height: auto;
+  } */
 </style>

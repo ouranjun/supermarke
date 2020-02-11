@@ -17,6 +17,8 @@
 
 <script>
 import CheckButton from 'content/checkButton/CheckButton'
+import { Toast } from 'vant';
+import 'vant/lib/toast/style'
 
 export default {
   name: 'shopCartBottomBar',
@@ -52,7 +54,13 @@ export default {
     },
     jiesuan () {
       if(this.checkLength === 0){
-        this.$toast.show('你没有选择宝贝哦',1500)
+        Toast.fail('您没有选择宝贝哦');
+      }else {
+        Toast.loading({
+        message: '加载中...',
+        forbidClick: true
+      });
+
       }
     }
   }
