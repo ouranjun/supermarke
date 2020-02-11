@@ -10,6 +10,7 @@ const Detail = () => import('views/detail/Detail.vue')
 const AddressList = () => import('views/other/chilren/AddressList')
 const AddressEdit = () => import('views/other/chilren/AddressEdit')
 const EditAddress = () => import('views/other/chilren/EditAddress')
+const Login = () => import('views/login/Login')
 
 // 解决多次点击重复路由报错
 const originalPush = VueRouter.prototype.push
@@ -64,6 +65,10 @@ const routes = [
   {
     path: '/addressedit',
     component: AddressEdit
+  },
+  {
+    path: '/login',
+    component: Login
   }
 ]
 

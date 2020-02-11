@@ -58,6 +58,7 @@ export default {
     _getSubcategory (index) {
       this.currentIndex = index
       const maitKey = this.CategoryTitle[index].maitKey
+      console.log(this.CategoryTitle[index]);
       getSubcategory(maitKey).then(res => {
         this.subCategory = res.data.list
       })

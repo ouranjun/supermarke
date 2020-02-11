@@ -36,6 +36,7 @@ import FeatureView from './chilrenCom/FeatureView'
 import TabControl from 'content/tabcontrol/TabControl'
 import GoodList from 'content/goods/GoodsList'
 import BackTop from 'common/backtop/backTop'
+
 import { Toast } from 'vant';
 import 'vant/lib/toast/style'
 

@@ -13,7 +13,7 @@
         height="5rem"
         src="https://img.yzcdn.cn/vant/cat.jpeg"
       />
-      <div class="personInfo">
+      <div class="personInfo" @click="openLogin">
         <div>登录/注册</div>
         <span class="tag">暂未绑定手机号码</span>
         <icon class="arrow" name="arrow" />
@@ -57,6 +57,11 @@ export default {
     'van-image':Image,
     Grid,
     GridItem
+  },
+  methods: {
+    openLogin () {
+      this.$router.push('/login')
+    }
   }
 }
 </script>

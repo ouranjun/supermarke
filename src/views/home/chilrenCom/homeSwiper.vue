@@ -1,18 +1,18 @@
 <template>
 <div id="hy-swiper">
-  <swiper class="my-swipe">
-  <swiper-item class="my-swipe-item" v-for="item in banners" :key="item.link" >
+  <swipe :autoplay="3000" indicator-color="white" class="my-swipe" :stop-propagation='false'>
+  <swipe-item class="my-swipe-item" v-for="item in banners" :key="item.link" >
     <a :href="item.link">
       <img :src="item.image" alt="" @load="swiperImageLoad">
     </a>
-  </swiper-item>
-  </swiper> 
+  </swipe-item>
+  </swipe> 
 </div>
 </template>
 
 <script>
-import Vue from 'vue'
-import {Swiper, SwiperItem} from 'common/swiper/index.js'
+// import {Swiper, SwiperItem} from 'common/swiper/index.js'
+import {Swipe, SwipeItem} from 'vant'
 
 export default {
   name: 'homeSwiper',
@@ -36,8 +36,8 @@ export default {
     }
   },
   components: {
-    Swiper, 
-    SwiperItem
+    Swipe, 
+    SwipeItem
   },
   methods: {
     swiperImageLoad () {
@@ -51,5 +51,19 @@ export default {
 </script>
 
 <style>
+  .my-swipe{
+    width: 100%;
+    height: 200px;
+  }
+
+  .my-swipe-item{
+    height: 100%;
+    width: 100%;
+  }
+
+  .my-swipe-item img {
+    height: 100%;
+    width: 100%;
+  }
 
 </style>
