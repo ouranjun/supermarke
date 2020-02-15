@@ -1,14 +1,14 @@
 <template>
-  <swiper class="detail-swiper">
-    <swiper-item v-for="item in topImages" :key="item">
+  <swipe :autoplay="3000" indicator-color="white" class="my-swipe" :stop-propagation='false'>
+    <swipe-item class="swiper-item" v-for="item in topImages" :key="item">
       <img :src="item" alt="">
-    </swiper-item>
-  </swiper>
+    </swipe-item>
+  </swipe>
 </template>
 
 <script>
 
-  import {Swiper, SwiperItem} from 'common/swiper/index.js'
+import {Swipe, SwipeItem} from 'vant'
 
   export default {
     data () {
@@ -17,8 +17,8 @@
       }
     },
     components: {
-      Swiper, 
-      SwiperItem
+      Swipe, 
+      SwipeItem
     },
     props: {
       topImages: {
@@ -31,15 +31,14 @@
   }
 </script>
 
-<style>
-  .detail-swiper {
-    height: 300px;
-    overflow: hidden;
+<style scoped>
+  .my-swipe {
+    width: 100%;
+  height: 30rem;
+    
   }
-  .detail-swiper img {
-    width: auto;
-    height: auto;
-    max-height: 100%;
-    max-width: 100%;
+  .my-swipe img {
+    width: 100%;
+    height: 100%;
   }
 </style>

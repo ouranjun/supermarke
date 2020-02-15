@@ -59,8 +59,13 @@ export default {
         Toast.loading({
         message: '加载中...',
         forbidClick: true
-      });
-
+      })
+      let item = this.$store.state.cartList.filter(item => item.checked)
+      this.$router.push({
+        name: 'order',
+        params: {goods: item}
+      })
+        // this.$router.push('/order')
       }
     }
   }

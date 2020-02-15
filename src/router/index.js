@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
+import state from '@/store/state';
+import { Toast } from 'vant';
+
 // 懒加载
 const Home = () => import('views/home/Home.vue')
 const Category = () => import('views/category/category.vue')
@@ -11,6 +14,11 @@ const AddressList = () => import('views/other/chilren/AddressList')
 const AddressEdit = () => import('views/other/chilren/AddressEdit')
 const EditAddress = () => import('views/other/chilren/EditAddress')
 const Login = () => import('views/login/Login')
+const UserInfo = () => import('views/profile/children/userInfo')
+const ChangeNickName = () => import('views/profile/children/ChangeNickName')
+const Other = () => import('views/other/Other')
+const Coupon = () => import('views/profile/children/Coupon')
+const Order = () => import('views/order/order')
 
 // 解决多次点击重复路由报错
 const originalPush = VueRouter.prototype.push
@@ -40,12 +48,41 @@ const routes = [
   {
     path: '/shopcart',
     component: Shopcartome,
-    meta: {showTab: true}
+    meta: {
+      showTab: true
+    }
   },
   {
     path: '/profile',
     component: Profile,
-    meta: {showTab: true}
+    meta: {showTab: true},
+    children: [
+      {
+        path: 'userInfo',
+        component: UserInfo,
+        name: 'userInfo',
+        children: [
+          {
+            path: 'changeNickName',
+            name: 'ChangeNickName',
+            component: ChangeNickName
+          }
+          
+        ]
+      },
+      {
+        path: 'other',
+        component: Other,
+        name: 'other'
+      },
+      {
+        path: 'coupon',
+        component: Coupon,
+        meta: {
+          requireAuth: true,
+        }
+      }
+    ]
   },
   {
     path: '/detail/:iid',
@@ -54,6 +91,9 @@ const routes = [
   {
     path: '/addresslist',
     component: AddressList,
+    meta: {
+      requireAuth: true,
+    },
     children: [
       {
       path: 'editaddress',
@@ -64,17 +104,50 @@ const routes = [
   },
   {
     path: '/addressedit',
-    component: AddressEdit
+    component: AddressEdit,
+    meta: {
+      requireAuth: true,
+    },
   },
   {
     path: '/login',
     component: Login
+  },
+  {
+    path: '/order',
+    component: Order,
+    name: 'order',
+    meta: {
+      requireAuth: true,
+    },
+    children: [
+      {
+        path: 'addresslist',
+        component: AddressList,
+        name: 'addresslist'
+      }
+    ]
   }
 ]
 
 const router = new VueRouter({
   routes,
   mode: 'history'
+})
+
+// 路由守卫
+router.beforeEach((to, from, next) => {
+  if(to.meta.requireAuth) {
+    if (state.userInfo && state.userInfo.token) {
+      next()
+    }else {
+      next({
+        path: '/login'
+      })
+    }
+  } else {
+    next()
+  }
 })
 
 export default router

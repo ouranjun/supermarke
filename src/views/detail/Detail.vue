@@ -18,7 +18,6 @@
       :sku="sku"
       :goods="goods"
       :goods-id="goodsId"
-      :message-config="messageConfig"
       :close-on-click-overlay='overlay'
       :reset-selected-sku-on-hide = "onHide"
       @buy-clicked="onBuyClicked"
@@ -72,7 +71,6 @@ export default {
       backTopisShow: false,
       show: false,
       sku,
-      messageConfig,
       overlay: true,
       goodsId: '001',
       goods: {

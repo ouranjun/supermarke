@@ -1,0 +1,2 @@
+// 选中地址
+export const CHOOSE_USER_ADDRESS = 'CHOOSE_USER_ADDRESS';

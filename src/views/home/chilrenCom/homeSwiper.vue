@@ -53,12 +53,12 @@ export default {
 <style>
   .my-swipe{
     width: 100%;
-    height: 200px;
+    height: 100%;
   }
 
   .my-swipe-item{
     height: 100%;
-    width: 100%;
+    width: 200px;
   }
 
   .my-swipe-item img {

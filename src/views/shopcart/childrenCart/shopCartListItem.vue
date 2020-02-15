@@ -12,7 +12,9 @@
       <div class="item-desc">商品描述：{{product.desc}}</div>
       <div class="info-bottom">
         <span class="item-price left">￥{{product.price}}</span>
-        <stepper class="right" v-model="value" />
+        <stepper class="right" 
+                 v-model="value"
+                 @change="onChange(product.iid,value)" />
       </div>
     </div>
   </div>
@@ -68,6 +70,9 @@ export default {
     close (iid,index) {
       this.$emit('remove',index)
       this.$store.commit('removeFormCar',iid)
+    },
+    onChange (iid,value) {
+       this.$store.commit('goodsCurrent',{iid,value})
     }
 
   }

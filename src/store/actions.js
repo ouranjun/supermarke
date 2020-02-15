@@ -2,6 +2,10 @@ import {
   ADD_COUNTER,
   ADD_TO_CART
 } from './mutations.type.js'
+import {
+  getLocalStore,
+  setLocalStore
+} from 'config/global'
 
 export default {
   // context = {state, commit}
@@ -22,5 +26,19 @@ export default {
         resolve('已添加到购物车')
       }
     })
+  },
+  // 同步用户信息
+  syncuserInfo({commit}, userInfo) {
+    commit('userInfo',{userInfo})
+  },
+  // 如果本地存在Token 那么就自动登录
+  aotuLogin({commit}){
+    // 从本地获取
+    let userInfo = getLocalStore('userInfo')
+    if(userInfo){
+      commit('userInfo',{
+        userInfo
+      })
+    }
   }
 }

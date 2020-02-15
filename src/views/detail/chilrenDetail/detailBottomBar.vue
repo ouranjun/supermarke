@@ -22,17 +22,42 @@
 </template>
 
 <script>
+import { Dialog } from 'vant';
+import { mapState } from 'vuex'
 export default {
   name: 'detailBottomBar',
   data() {
     return {
     };
   },
+  computed: {
+    userInfo () {
+      return this.$store.state.userInfo
+    }
+  },
   methods: {
     addCart () {
+      if(!this.userInfo.token){
+        Dialog.alert({
+          title: '登录提示',
+          message: '您还没有登录,先登录吧'
+        }).then(() => {
+          this.$router.push('/login')
+        });
+        return false
+      }
       this.$emit('addCart')
     },
     buyGood () {
+      if(!this.userInfo.token){
+        Dialog.alert({
+          title: '登录提示',
+          message: '您还没有登录,先登录吧'
+        }).then(() => {
+          this.$router.push('/login')
+        });
+        return false
+      }
       this.$emit('buyGood')
     }
   }

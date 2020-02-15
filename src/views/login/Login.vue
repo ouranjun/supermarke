@@ -44,6 +44,9 @@
 import NavBar from 'common/navbar/NavBar'
 import { Icon, Toast, Field, Button, CellGroup, CountDown, Dialog  } from 'vant';
 import 'vant/lib/field/style'
+import { mapState, mapActions, mapMutations } from 'vuex'
+// 引入API调用接口
+import { phoneCaptchaLogin } from 'network/login'
 
 export default {
   name: 'login',
@@ -73,6 +76,8 @@ export default {
     [Dialog.Component.name]: Dialog.Component
   },
   methods: {
+    // 0.mapActions 同步用户信息
+    ...mapActions(['syncuserInfo']),
     back () {
       this.$router.back()
     },
@@ -114,7 +119,7 @@ export default {
           this.newCode = code
         });
     },
-    loginBtn () {
+    async loginBtn () {
       if(!(this.telStr.test(this.tel))){
         Dialog.alert({
           message: '请输入正确的手机号'
@@ -128,8 +133,11 @@ export default {
       }else if (this.newCode == this.sms){
          Dialog.alert({
           message: '登录成功'
-        }).then(() => {
-          this.$router.back()
+        }).then(async () => {
+          let ref = await phoneCaptchaLogin(this.tel)
+          console.log(ref.data);
+          this.syncuserInfo(ref.data)
+          this.$router.replace('/profile')
         });
       }else {
         Dialog.alert({
